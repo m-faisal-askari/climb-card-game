@@ -1,0 +1,251 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0f172a;
+  --color-secondary: #020202;
+}
+
+:root {
+  --bg-gradient: radial-gradient(
+    ellipse at 50% 35%,
+    #0f2e21 0%,
+    #081a13 50%,
+    #030a07 100%
+  );
+  --felt-gradient: radial-gradient(
+    ellipse at 50% 45%,
+    #0d462c 0%,
+    #083320 65%,
+    #052115 100%
+  );
+  --felt-border: rgba(212, 175, 55, 0.28);
+  --felt-shadow:
+    inset 0 2px 18px rgba(0, 0, 0, 0.75), 0 12px 32px -4px rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-gradient);
+  color: #f8fafc;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Base Playing Card Component
+   ========================================================================== */
+
+.card {
+  /* Enforce standard playing card aspect ratio (5 : 7) */
+  aspect-ratio: 5 / 7 !important;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  /* Card surface styling */
+  background: linear-gradient(170deg, #ffffff 0%, #fbfbfb 65%, #f1f3f5 100%);
+  border-radius: clamp(5px, 1cqi, 9px);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 2px 6px -1px rgba(0, 0, 0, 0.35),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
+
+  /* Typography: scaled via relative em units */
+  font-size: var(--card-fs, clamp(9px, 1.8vw, 13px));
+  font-family: inherit;
+  color: #0f172a;
+  user-select: none;
+  cursor: pointer;
+
+  /* Transitions */
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.16s ease;
+}
+
+/* Card Suit Colors */
+.card-suit-red,
+.card-suit-red .corner-label {
+  color: #dc2626 !important;
+}
+
+.card-suit-black,
+.card-suit-black .corner-label {
+  color: #0f172a !important;
+}
+
+/* Card Corner Labels */
+.corner-label {
+  font-weight: 800;
+  text-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.08);
+}
+
+/* Face Card and Joker Images */
+.card img {
+  max-width: 63% !important;
+  max-height: 63% !important;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
+}
+
+/* Hover effect on interactive cards - hovers in front of all cards */
+button.card:hover {
+  transform: translateY(-0.45rem);
+  box-shadow:
+    0 8px 20px -2px rgba(0, 0, 0, 0.55),
+    0 3px 6px -1px rgba(0, 0, 0, 0.35);
+  z-index: 60 !important;
+}
+
+/* Selected Card State */
+.card.selected,
+button.card.selected {
+  transform: translateY(-1.15rem) rotate(-2deg);
+  border-color: #f59e0b;
+  box-shadow:
+    0 0 0 2px #f59e0b,
+    0 12px 24px -4px rgba(245, 158, 11, 0.35),
+    0 6px 12px -2px rgba(0, 0, 0, 0.55);
+  z-index: 45 !important;
+}
+
+button.card.selected:hover {
+  transform: translateY(-1.3rem) rotate(-2deg);
+  box-shadow:
+    0 0 0 2.5px #fbbf24,
+    0 14px 28px -4px rgba(245, 158, 11, 0.45),
+    0 8px 16px -2px rgba(0, 0, 0, 0.6);
+  z-index: 65 !important;
+}
+
+.card:focus-visible {
+  outline: 2.5px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Action Buttons
+   ========================================================================== */
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: clamp(0.45rem, 1vh, 0.65rem) clamp(0.85rem, 2vw, 1.35rem);
+  border-radius: 0.75rem;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(0.78rem, 1.5vh, 0.92rem);
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.35);
+}
+
+.btn-play.is-ready {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-color: rgba(167, 243, 208, 0.4);
+  box-shadow:
+    0 4px 12px -1px rgba(16, 185, 129, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-play.is-ready:hover {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  transform: translateY(-1.5px) scale(1.02);
+  box-shadow: 0 6px 16px -1px rgba(16, 185, 129, 0.5);
+}
+
+.btn-play.is-ready:active {
+  transform: translateY(0.5px) scale(0.98);
+}
+
+.btn-play.is-disabled {
+  background: rgba(30, 41, 59, 0.5);
+  color: #64748b;
+  border-color: rgba(255, 255, 255, 0.06);
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.btn-pass.is-ready {
+  background: rgba(30, 41, 59, 0.85);
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+.btn-pass.is-ready:hover {
+  background: rgba(51, 65, 85, 0.95);
+  color: #ffffff;
+  border-color: rgba(203, 213, 225, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-pass.is-ready:active {
+  transform: translateY(0.5px) scale(0.98);
+}
+
+.btn-pass.is-disabled {
+  background: rgba(15, 23, 42, 0.4);
+  color: #475569;
+  border-color: rgba(255, 255, 255, 0.04);
+  cursor: not-allowed;
+  opacity: 0.4;
+  box-shadow: none;
+}
+
+.btn-action:focus-visible {
+  outline: 2.5px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
