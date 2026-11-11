@@ -257,6 +257,17 @@ function App() {
 
   return (
     <div className="app-shell">
+      {gameState.status === "playing" && (
+        <div
+          className="easy-mode-indicator"
+          title="Grace uses the trained model. Dave and Lily use the current basic AI."
+          aria-label="Easy Mode"
+        >
+          <span className="easy-mode-dot" aria-hidden="true" />
+          <span>Easy Mode</span>
+        </div>
+      )}
+
       {/* Top Controls Bar */}
       <div className="top-controls-bar">
         {gameState.status === "playing" && (

@@ -84,6 +84,37 @@
 }
 
 /* Top Controls Bar (Pause & Sound) */
+.easy-mode-indicator {
+  position: absolute;
+  top: max(env(safe-area-inset-top), 0.5rem);
+  left: max(env(safe-area-inset-left), 0.65rem);
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.82);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+  color: #fde68a;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+
+.easy-mode-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: #fbbf24;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.55);
+}
+
 .top-controls-bar {
   position: absolute;
   top: max(env(safe-area-inset-top), 0.5rem);

@@ -1,5 +1,6 @@
 import { passTurn, playCards } from "./gameActions.js";
 import { getCombinationType, validatePlay } from "./gameRules.js";
+import { chooseWeightedAction } from "./weightedAi.js";
 
 function getSubsets(cards, size) {
   const subsets = [];
@@ -143,6 +144,24 @@ export function makeAIMove(gameState) {
     currentPlayer.status !== "active"
   ) {
     return gameState;
+  }
+
+  if (currentPlayer.id === "player-3") {
+    try {
+      const action = chooseWeightedAction(gameState);
+      if (action?.actionType === "pass" || action?.cards?.length === 0) {
+        const passedState = passTurn(gameState);
+        if (passedState !== gameState) return passedState;
+      } else if (action?.cards?.length) {
+        const weightedState = playCards(
+          gameState,
+          action.cards.map((card) => card.id),
+        );
+        if (weightedState !== gameState) return weightedState;
+      }
+    } catch (error) {
+      console.warn("Grace's trained move failed; using the regular AI move.", error);
+    }
   }
 
   const play = choosePlay(gameState, currentPlayer);

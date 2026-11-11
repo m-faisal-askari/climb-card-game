@@ -9,9 +9,9 @@ import { fileURLToPath } from "node:url";
 import { DQNAgent } from "./algorithms/dqn_agent.js";
 import { chooseExpertMove } from "./algorithms/expert_heuristic.js";
 import { chooseISMCTSMove } from "./algorithms/ismcts_agent.js";
-import { ALL_CARDS, CARD_INDEX_BY_ID } from "./engine/cards.js";
-import { ClimbGameSimulation } from "./engine/game_sim.js";
-import { encodeStateAction } from "./features/encoder.js";
+import { adaptGameStateToSim } from "./state_adapter.js";
+
+export { adaptGameStateToSim };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -36,52 +36,6 @@ export function getSmartDQNAgent() {
   }
 
   return cachedDQNAgent;
-}
-
-/**
- * Converts a standard game state object from the Climb React app into a ClimbGameSimulation snapshot
- */
-export function adaptGameStateToSim(gameState) {
-  const sim = new ClimbGameSimulation();
-
-  sim.players = gameState.players.map((p, idx) => ({
-    id: idx,
-    originalId: p.id,
-    name: p.name,
-    hand: (p.hand ?? []).map((card) => {
-      const idx = CARD_INDEX_BY_ID.get(card.id);
-      return idx !== undefined ? ALL_CARDS[idx] : card;
-    }),
-    status: p.status,
-    finishPosition: p.finishPosition ?? null,
-  }));
-
-  const currentIdx = gameState.players.findIndex((p) => p.id === gameState.currentPlayerId);
-  sim.currentPlayer = currentIdx >= 0 ? currentIdx : 0;
-
-  if (gameState.currentPlay) {
-    const playCards = (gameState.currentPlay.cards ?? []).map((card) => {
-      const idx = CARD_INDEX_BY_ID.get(card.id);
-      return idx !== undefined ? ALL_CARDS[idx] : card;
-    });
-    sim.currentPlay = {
-      playerId: gameState.currentPlay.playerId,
-      cards: playCards,
-      kind: gameState.currentPlay.kind,
-      maxStrength: Math.max(...playCards.map((c) => c.value ?? 0)),
-      playedAtTurn: gameState.turnNumber,
-    };
-  } else {
-    sim.currentPlay = null;
-  }
-
-  const lastPlayerIdx = gameState.players.findIndex((p) => p.id === gameState.lastPlayerToPlayId);
-  sim.lastPlayerToPlay = lastPlayerIdx >= 0 ? lastPlayerIdx : null;
-  sim.consecutivePasses = gameState.consecutivePasses ?? 0;
-  sim.turnNumber = gameState.turnNumber ?? 1;
-  sim.isOver = gameState.status === "finished";
-
-  return { sim, currentIdx };
 }
 
 /**
