@@ -1,30 +1,32 @@
+import { memo } from "react";
+
 const faceCardImages = {
-  "J-spades": "/Jack of spades.png",
-  "Q-spades": "/Queen of Spades.png",
-  "K-spades": "/King of spades.png",
-  "J-hearts": "/Jack of Hearts.png",
-  "Q-hearts": "/Queen of Hearts.png",
-  "K-hearts": "/King of Hearts.png",
-  "J-diamonds": "/Jack of diamonds.png",
-  "Q-diamonds": "/Queen of diamonds.png",
-  "K-diamonds": "/king of diamonds.png",
-  "J-clubs": "/Jack of Clubs.png",
-  "Q-clubs": "/Queen of Clubs.png",
-  "K-clubs": "/King of Clubs.png",
+  "J-spades": "/Jack of spades.webp",
+  "Q-spades": "/Queen of Spades.webp",
+  "K-spades": "/King of spades.webp",
+  "J-hearts": "/Jack of Hearts.webp",
+  "Q-hearts": "/Queen of Hearts.webp",
+  "K-hearts": "/King of Hearts.webp",
+  "J-diamonds": "/Jack of diamonds.webp",
+  "Q-diamonds": "/Queen of diamonds.webp",
+  "K-diamonds": "/king of diamonds.webp",
+  "J-clubs": "/Jack of Clubs.webp",
+  "Q-clubs": "/Queen of Clubs.webp",
+  "K-clubs": "/King of Clubs.webp",
 };
 
 function getJokerImagePath(card) {
   const { color, gender } = card.meta;
   if (color === "black-and-white" && gender === "male") {
-    return "/black and white male joker.png";
+    return "/black and white male joker.webp";
   }
   if (color === "colored" && gender === "male") {
-    return "/Colored male joker.png";
+    return "/Colored male joker.webp";
   }
   if (color === "black-and-white" && gender === "female") {
-    return "/Black and White female joker.png";
+    return "/Black and White female joker.webp";
   }
-  return "/Colored Female Joker.png";
+  return "/Colored Female Joker.webp";
 }
 
 function CornerLabel({ card, className = "" }) {
@@ -146,6 +148,10 @@ function PlayingCard({ card, isSelected = false, onClick }) {
         <img
           src={getJokerImagePath(card)}
           alt=""
+          loading="lazy"
+          decoding="async"
+          width="160"
+          height="240"
           className="w-[62%] h-[62%] object-contain select-none pointer-events-none drop-shadow-sm"
         />
         <div
@@ -179,6 +185,10 @@ function PlayingCard({ card, isSelected = false, onClick }) {
         <img
           src={faceCardPath}
           alt=""
+          loading="lazy"
+          decoding="async"
+          width="160"
+          height="240"
           className="w-[62%] h-[62%] object-contain select-none pointer-events-none drop-shadow-sm"
         />
         <span className="absolute bottom-[4%] right-[5%] rotate-180">
@@ -214,4 +224,4 @@ function PlayingCard({ card, isSelected = false, onClick }) {
   );
 }
 
-export default PlayingCard;
+export default memo(PlayingCard);

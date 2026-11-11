@@ -198,10 +198,12 @@ export function playCards(gameState, selectedCardIds) {
   const selectedCards = currentPlayer.hand.filter((card) => selectedIds.has(card.id));
   if (selectedCards.length !== selectedIds.size) return gameState;
 
+  const sortedCards = [...selectedCards].sort((a, b) => a.value - b.value);
+
   const newPlay = {
     playerId: currentPlayer.id,
-    cards: selectedCards,
-    kind: getCombinationType(selectedCards),
+    cards: sortedCards,
+    kind: getCombinationType(sortedCards),
     playedAtTurn: gameState.turnNumber,
   };
 

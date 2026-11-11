@@ -6,6 +6,7 @@ const PauseOverlay = ({
   gameState,
   isMuted,
   onToggleSound,
+  onOpenGuide,
 }) => {
   const currentPlayer = gameState.players.find(
     (player) => player.id === gameState.currentPlayerId,
@@ -19,6 +20,11 @@ const PauseOverlay = ({
   const handleRestart = () => {
     soundManager.playButtonClick();
     onRestart();
+  };
+
+  const handleOpenGuide = () => {
+    soundManager.playButtonClick();
+    onOpenGuide?.();
   };
 
   return (
@@ -85,6 +91,15 @@ const PauseOverlay = ({
           >
             <span aria-hidden="true">▶</span>
             <span>Resume Game</span>
+          </button>
+
+          <button
+            type="button"
+            className="btn-pause-guide"
+            onClick={handleOpenGuide}
+          >
+            <span aria-hidden="true">📖</span>
+            <span>How to Play & Full Rules</span>
           </button>
 
           <button

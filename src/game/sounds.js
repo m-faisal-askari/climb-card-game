@@ -14,7 +14,9 @@ class SoundManager {
         if (stored !== null) {
           this.muted = stored === "true";
         }
-      } catch (e) {}
+      } catch {
+        // ignore
+      }
     }
   }
 
@@ -48,7 +50,9 @@ class SoundManager {
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem("climb_sound_muted", String(this.muted));
-      } catch (e) {}
+      } catch {
+        // ignore
+      }
     }
 
     if (this.masterGain && this.ctx) {

@@ -49,6 +49,10 @@ const ResultsScreen = ({ results, onRestart }) => {
                 src={player.path}
                 alt=""
                 className="results-avatar"
+                loading="lazy"
+                decoding="async"
+                width="36"
+                height="36"
               />
               <span className="results-name">{player.name}</span>
               {player.position === 1 && (

@@ -38,12 +38,15 @@ function getSequences(hand) {
 
     cards.forEach((card) => {
       const nextSelection = [...selectedCards, card];
-      if (nextSelection.length >= 5) sequences.push(nextSelection);
-      if (value < 13) extendSequence(value + 1, nextSelection);
+      if (nextSelection.length === 5) {
+        sequences.push(nextSelection);
+      } else if (nextSelection.length < 5 && value < 13) {
+        extendSequence(value + 1, nextSelection);
+      }
     });
   }
 
-  for (let startValue = 1; startValue <= 13; startValue += 1) {
+  for (let startValue = 1; startValue <= 9; startValue += 1) {
     extendSequence(startValue, []);
   }
 
@@ -90,6 +93,9 @@ export function getPlayableCombinations(hand) {
 }
 
 function getPlayValue(play) {
+  if (play.kind === "sequence") {
+    return Math.min(...play.cards.map((card) => card.value));
+  }
   return Math.max(...play.cards.map((card) => card.value));
 }
 

@@ -12,9 +12,9 @@ This file records the rules used by the first playable local version. It resolve
 
 - A single card, a same-rank pair, three of a kind, or four of a kind is a valid combination.
 - Two Jokers form a pair only when they have the same gender. A Joker cannot be combined with a standard card.
-- A sequence contains at least five standard cards of consecutive ranks. Jokers cannot be part of a sequence. Sequences do not wrap from 2 back to 3.
-- A response must have the same combination type and card count as the play on the table. A sequence therefore responds to a sequence of the same length; it does not respond to a single, pair, or triple.
-- A response beats a play when its highest card value is higher. Equal rank values do not use suit as a tiebreaker.
+- A sequence must contain exactly five standard cards of consecutive ranks. Jokers cannot be part of a sequence. Sequences do not wrap from 2 back to 3. A sequence does not care about suits or pairs within the combination; any five standard cards in consecutive order form a valid sequence.
+- When leading (table is clear), a player can lead with any valid five-card sequence. When responding to a play on the table, a sequence can be thrown if the first (lowest) number in the sequence is bigger than the one on the table (whether responding to another sequence, a single card, a pair, or a triple). Equal rank values do not use suit as a tiebreaker.
+- For other non-sequence responses, a response must match the combination type and card count of the play on the table, and beat it in rank value.
 
 ## Joker control
 

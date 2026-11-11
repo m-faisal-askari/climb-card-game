@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import humanAvatar from "./assets/human.png";
-import daveAvatar from "./assets/dave.png";
-import graceAvatar from "./assets/grace.png";
-import lilyAvatar from "./assets/lily.png";
+import humanAvatar from "./assets/human.webp";
+import daveAvatar from "./assets/dave.webp";
+import graceAvatar from "./assets/grace.webp";
+import lilyAvatar from "./assets/lily.webp";
 import ActionControls from "./components/ActionControls.jsx";
 import GameTable from "./components/GameTable.jsx";
+import HowToPlayModal from "./components/HowToPlayModal.jsx";
 import PauseOverlay from "./components/PauseOverlay.jsx";
 import PlayerArea from "./components/PlayerArea.jsx";
 import PlayerHand from "./components/PlayerHand.jsx";
@@ -56,6 +57,7 @@ function getInitialGameState() {
 function App() {
   const [gameState, setGameState] = useState(() => getInitialGameState());
   const [isPaused, setIsPaused] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
   const [message, setMessage] = useState("");
   const [isMuted, setIsMuted] = useState(() => soundManager.isMuted());
@@ -77,15 +79,29 @@ function App() {
     }
   }, [gameState]);
 
-  // Keyboard shortcuts: Escape / P to pause, M to toggle mute
+  // Keyboard shortcuts: Escape / P to pause, M to toggle mute, H / ? for guide
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape" || e.key === "p" || e.key === "P") {
-        if (gameState.status === "playing") {
+      if (e.key === "Escape") {
+        if (isGuideOpen) {
+          e.preventDefault();
+          soundManager.playButtonClick();
+          setIsGuideOpen(false);
+        } else if (gameState.status === "playing") {
           e.preventDefault();
           soundManager.playButtonClick();
           setIsPaused((prev) => !prev);
         }
+      } else if (e.key === "p" || e.key === "P") {
+        if (!isGuideOpen && gameState.status === "playing") {
+          e.preventDefault();
+          soundManager.playButtonClick();
+          setIsPaused((prev) => !prev);
+        }
+      } else if (e.key === "h" || e.key === "H" || e.key === "?") {
+        e.preventDefault();
+        soundManager.playButtonClick();
+        setIsGuideOpen((prev) => !prev);
       } else if (e.key === "m" || e.key === "M") {
         e.preventDefault();
         soundManager.playButtonClick();
@@ -96,11 +112,11 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [gameState.status]);
+  }, [gameState.status, isGuideOpen]);
 
-  // AI turns (paused while isPaused is true)
+  // AI turns (paused while isPaused or isGuideOpen is true)
   useEffect(() => {
-    if (gameState.status !== "playing" || isPaused || currentPlayer?.type !== "computer") {
+    if (gameState.status !== "playing" || isPaused || isGuideOpen || currentPlayer?.type !== "computer") {
       return undefined;
     }
 
@@ -134,6 +150,7 @@ function App() {
     gameState.turnNumber,
     currentPlayer?.type,
     isPaused,
+    isGuideOpen,
   ]);
 
   // Alert chime when it becomes human's turn
@@ -141,13 +158,14 @@ function App() {
     if (
       gameState.status === "playing" &&
       !isPaused &&
+      !isGuideOpen &&
       isHumanTurn &&
       prevPlayerIdRef.current !== currentPlayer?.id
     ) {
       soundManager.playYourTurn();
     }
     prevPlayerIdRef.current = currentPlayer?.id;
-  }, [isHumanTurn, currentPlayer?.id, gameState.status, isPaused]);
+  }, [isHumanTurn, currentPlayer?.id, gameState.status, isPaused, isGuideOpen]);
 
   // Victory / Game over sound
   useEffect(() => {
@@ -156,10 +174,10 @@ function App() {
       const isWinner = results[0]?.type === "human";
       soundManager.playGameOver(isWinner);
     }
-  }, [gameState.status]);
+  }, [gameState]);
 
   const handlePlay = () => {
-    if (isPaused) return;
+    if (isPaused || isGuideOpen) return;
 
     const nextState = playCards(gameState, selectedCards);
 
@@ -195,7 +213,7 @@ function App() {
   };
 
   const handlePass = () => {
-    if (isPaused) return;
+    if (isPaused || isGuideOpen) return;
 
     const nextState = passTurn(gameState);
     if (nextState === gameState) return;
@@ -213,9 +231,12 @@ function App() {
     setSelectedCards([]);
     setMessage("");
     setIsPaused(false);
+    setIsGuideOpen(false);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(freshState));
-    } catch (e) {}
+    } catch {
+      // ignore storage failure
+    }
   };
 
   const handleToggleSound = () => {
@@ -227,6 +248,11 @@ function App() {
   const handleTogglePause = () => {
     soundManager.playButtonClick();
     setIsPaused((prev) => !prev);
+  };
+
+  const handleToggleGuide = () => {
+    soundManager.playButtonClick();
+    setIsGuideOpen((prev) => !prev);
   };
 
   return (
@@ -275,6 +301,20 @@ function App() {
             </svg>
           )}
         </button>
+
+        <button
+          type="button"
+          className={`top-control-btn guide-btn ${isGuideOpen ? "is-active" : ""}`}
+          onClick={handleToggleGuide}
+          title={isGuideOpen ? "Close Guide (H / Esc)" : "How to Play & Full Rules (H)"}
+          aria-label={isGuideOpen ? "Close Guide" : "How to Play"}
+        >
+          <svg className="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </button>
       </div>
 
       {/* Pause Modal Overlay */}
@@ -285,8 +325,15 @@ function App() {
           onRestart={handleRestart}
           isMuted={isMuted}
           onToggleSound={handleToggleSound}
+          onOpenGuide={() => setIsGuideOpen(true)}
         />
       )}
+
+      {/* How to Play Guide Modal */}
+      <HowToPlayModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
+      />
 
       <div className="app-content">
         {gameState.status === "finished" ? (
@@ -334,7 +381,7 @@ function App() {
               <ActionControls
                 onPlay={handlePlay}
                 onPass={handlePass}
-                disabled={!isHumanTurn || gameState.status !== "playing" || isPaused}
+                disabled={!isHumanTurn || gameState.status !== "playing" || isPaused || isGuideOpen}
                 canPass={Boolean(gameState.currentPlay)}
                 hasSelection={selectedCards.length > 0}
               />
@@ -346,12 +393,25 @@ function App() {
                 player={humanPlayer}
                 selectedCards={selectedCards}
                 setSelectedCards={setSelectedCards}
-                disabled={!isHumanTurn || gameState.status !== "playing" || isPaused}
+                isYourTurn={isHumanTurn}
+                currentTurnName={currentPlayer?.name}
+                disabled={!isHumanTurn || gameState.status !== "playing" || isPaused || isGuideOpen}
               />
             </div>
           </main>
         )}
       </div>
+
+      {/* App Footer */}
+      <footer className="app-footer">
+        <span className="footer-copyright">
+          © {new Date().getFullYear()} <strong className="footer-brand">Askari Labs</strong>. All rights reserved.
+        </span>
+        <span className="footer-divider" aria-hidden="true">•</span>
+        <span className="footer-developer">
+          Developed by <strong className="footer-dev-name">Faisal Askari</strong>
+        </span>
+      </footer>
     </div>
   );
 }

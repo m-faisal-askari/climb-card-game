@@ -1,8 +1,8 @@
 import generateAndDealDeck from "./deck.js";
-import humanAvatar from "../assets/human.png";
-import daveAvatar from "../assets/dave.png";
-import graceAvatar from "../assets/grace.png";
-import lilyAvatar from "../assets/lily.png";
+import humanAvatar from "../assets/human.webp";
+import daveAvatar from "../assets/dave.webp";
+import graceAvatar from "../assets/grace.webp";
+import lilyAvatar from "../assets/lily.webp";
 
 const sortPlayerHand = (hand) =>
   [...hand].sort((a, b) => a.value - b.value || a.id.localeCompare(b.id));

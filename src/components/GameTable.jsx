@@ -76,7 +76,7 @@ const GameTable = ({
         >
           {isHumanTurn ? (
             <span>
-              Your turn {currentPlay ? "— Beat the play or pass" : "— Lead a combination"}
+              Your turn: {currentPlay ? "Beat the play or pass" : "Lead a combination"}
             </span>
           ) : (
             <span>

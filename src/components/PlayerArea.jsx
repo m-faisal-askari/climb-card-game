@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const ordinal = (position) => {
   if (position % 100 >= 11 && position % 100 <= 13) return `${position}th`;
   return `${position}${({ 1: "st", 2: "nd", 3: "rd" })[position % 10] ?? "th"}`;
@@ -28,8 +30,10 @@ const PlayerArea = ({ player, isActive = false }) => {
           src={player.path}
           alt={player.name}
           className="player-avatar"
-          loading="eager"
-          decoding="sync"
+          loading="lazy"
+          decoding="async"
+          width="52"
+          height="52"
         />
         {isFinished && (
           <span
@@ -63,4 +67,4 @@ const PlayerArea = ({ player, isActive = false }) => {
   );
 };
 
-export default PlayerArea;
+export default memo(PlayerArea);

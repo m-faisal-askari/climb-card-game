@@ -1,4 +1,4 @@
-# Climb — Data Model
+# Climb: Data Model
 
 ## 1. Purpose
 
@@ -17,12 +17,12 @@ It is the reference for how the application represents cards, players, plays, an
 ## 2. Core Entities
 
 Climb's main entities are:
-1. **Card** — one physical card in the 56-card deck.
-2. **Player** — a human player or a computer-controlled opponent.
-3. **Play** — a set of cards submitted together as one move.
-4. **Game State** — the current state of a single game.
-5. **Turn State** — information used to determine whose turn it is and what can happen next.
-6. **Game Result** — finishing positions once players finish.
+1. **Card**: one physical card in the 56-card deck.
+2. **Player**: a human player or a computer-controlled opponent.
+3. **Play**: a set of cards submitted together as one move.
+4. **Game State**: the current state of a single game.
+5. **Turn State**: information used to determine whose turn it is and what can happen next.
+6. **Game Result**: finishing positions once players finish.
 
 These are conceptual entities. They do not all need separate JavaScript classes. Plain objects and pure functions are sufficient.
 

@@ -24,8 +24,8 @@ export function getCombinationType(cards = []) {
     return combinationTypes[cards.length] ?? null;
   }
 
-  // Climb sequences use five or more standard cards and do not wrap from 2 to 3.
-  if (cards.length < 5 || cards.some((card) => card.type !== "standard")) {
+  // A sequence must have exactly five standard cards in consecutive rank order and does not wrap from 2 to 3.
+  if (cards.length !== 5 || cards.some((card) => card.type !== "standard")) {
     return null;
   }
 
@@ -33,8 +33,8 @@ export function getCombinationType(cards = []) {
   const uniqueValues = new Set(values);
 
   if (
-    uniqueValues.size !== cards.length ||
-    values.at(-1) - values[0] !== cards.length - 1
+    uniqueValues.size !== 5 ||
+    values[4] - values[0] !== 4
   ) {
     return null;
   }
@@ -56,14 +56,54 @@ function getPlayStrength(play) {
   return Math.max(...play.cards.map((card) => card.value));
 }
 
+export function getSequenceFirstValue(cards = []) {
+  if (!Array.isArray(cards) || cards.length === 0) return 0;
+  return Math.min(...cards.map((card) => card.value));
+}
+
 export function canBeatPreviousPlay(previousPlay, nextPlay) {
-  if (!previousPlay || !nextPlay || previousPlay.kind !== nextPlay.kind) {
+  if (!previousPlay || !nextPlay) {
+    return false;
+  }
+
+  if (isJokerPlay(previousPlay) && !isJokerPlay(nextPlay)) return false;
+
+  // If next play is a sequence (exactly five cards in consecutive order)
+  if (nextPlay.kind === "sequence") {
+    if (nextPlay.cards.length !== 5) return false;
+
+    const nextFirstVal = getSequenceFirstValue(nextPlay.cards);
+
+    // Beating a sequence on the table: first number in sequence must be bigger
+    if (previousPlay.kind === "sequence") {
+      const prevFirstVal = getSequenceFirstValue(previousPlay.cards);
+      return nextFirstVal > prevFirstVal;
+    }
+
+    // A sequence can also be thrown if its first number is bigger than the play on the table
+    // (regardless of whether the table has a single card, pair, or triple)
+    if (
+      previousPlay.kind === "single" ||
+      previousPlay.kind === "double" ||
+      previousPlay.kind === "triple"
+    ) {
+      const tableVal = getPlayStrength(previousPlay);
+      return nextFirstVal > tableVal;
+    }
+
+    return false;
+  }
+
+  // A non-sequence play cannot beat a sequence on the table
+  if (previousPlay.kind === "sequence") {
+    return false;
+  }
+
+  if (previousPlay.kind !== nextPlay.kind) {
     return false;
   }
 
   if (previousPlay.cards.length !== nextPlay.cards.length) return false;
-
-  if (isJokerPlay(previousPlay) && !isJokerPlay(nextPlay)) return false;
 
   return getPlayStrength(nextPlay) > getPlayStrength(previousPlay);
 }

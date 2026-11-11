@@ -1,4 +1,4 @@
-# Climb — Tech Stack
+# Climb: Tech Stack
 
 ## 1. Project Overview
 
@@ -53,7 +53,7 @@ src/
 └── index.css
 ```
 
-### UI layer — `src/components/`
+### UI layer: `src/components/`
 
 Responsible for rendering:
 - `PlayingCard`
@@ -66,15 +66,15 @@ Responsible for rendering:
 
 Components should receive data through props and call callbacks for user actions. Keep game rules out of visual components.
 
-### Game layer — `src/game/`
+### Game layer: `src/game/`
 
 Add modules as they become necessary:
-- `deck.js` — create, shuffle, and deal the deck.
-- `combinations.js` — classify selected cards into supported play types.
-- `rules.js` — validate and compare plays.
-- `turns.js` — handle turn order, passes, and the next eligible lead.
-- `gameState.js` — initialize the game and apply valid actions.
-- `computerPlayer.js` — choose a legal move for a computer opponent.
+- `deck.js`: create, shuffle, and deal the deck.
+- `combinations.js`: classify selected cards into supported play types.
+- `rules.js`: validate and compare plays.
+- `turns.js`: handle turn order, passes, and the next eligible lead.
+- `gameState.js`: initialize the game and apply valid actions.
+- `computerPlayer.js`: choose a legal move for a computer opponent.
 
 Prefer small, testable functions. Keep state changes explicit and predictable.
 
