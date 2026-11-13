@@ -100,9 +100,7 @@ const PlayerHand = ({
           const isHovered = hoveredCardId === card.id;
           const zIndex = isHovered
             ? 30000
-            : isSelected
-              ? 100 + index
-              : index + 1;
+            : index + 1;
 
           return (
             <div

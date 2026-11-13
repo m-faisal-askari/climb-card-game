@@ -260,7 +260,7 @@ function App() {
       {gameState.status === "playing" && (
         <div
           className="easy-mode-indicator"
-          title="Grace uses the trained model. Dave and Lily use the current basic AI."
+          title="All three opponents use the trained model in easy mode."
           aria-label="Easy Mode"
         >
           <span className="easy-mode-dot" aria-hidden="true" />

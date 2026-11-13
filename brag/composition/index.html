@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Climb — Brag Film</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #030a07; }
+      body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #f8fafc; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .scene-host { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      audio { display: none; }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-gm69" id="root" data-composition-id="root" data-start="0" data-duration="19.8" data-width="1080" data-height="1920" data-fps="30">
+      <div data-hf-id="hf-s1vq" id="scene-01-hook" class="scene-host" data-composition-id="scene-01-hook" data-composition-src="compositions/scene-01-hook.html" data-start="0" data-duration="2.8" data-track-index="0" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div data-hf-id="hf-dkby" id="scene-02-table" class="scene-host" data-composition-id="scene-02-table" data-composition-src="compositions/scene-02-table.html" data-start="2.8" data-duration="3.8" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div data-hf-id="hf-949b" id="scene-03-opening" class="scene-host" data-composition-id="scene-03-opening" data-composition-src="compositions/scene-03-opening.html" data-start="6.6" data-duration="4" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div data-hf-id="hf-9qcz" id="scene-04-joker" class="scene-host" data-composition-id="scene-04-joker" data-composition-src="compositions/scene-04-joker.html" data-start="10.6" data-duration="4.2" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div data-hf-id="hf-gvbw" id="scene-05-finish" class="scene-host" data-composition-id="scene-05-finish" data-composition-src="compositions/scene-05-finish.html" data-start="14.8" data-duration="5" data-track-index="4" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+
+      <audio data-hf-id="hf-q2xa" id="bg-music" class="clip" data-start="0" data-duration="19.8" data-track-index="5" data-volume="0.32" data-fade-in="0.35" data-fade-out="1" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"></audio>
+      <audio data-hf-id="hf-flfm" id="sfx-shuffle" class="clip" data-start="0.12" data-duration="0.601" data-track-index="6" data-volume="0.22" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio data-hf-id="hf-50fw" id="sfx-opening-play" class="clip" data-start="9.29" data-duration="0.584" data-track-index="7" data-volume="0.3" src="assets/sfx/casino/card-slide-2.ogg"></audio>
+      <audio data-hf-id="hf-sife" id="sfx-joker-counter" class="clip" data-start="13.11" data-duration="0.601" data-track-index="8" data-volume="0.28" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio data-hf-id="hf-fc0i" id="sfx-finish" class="clip" data-start="17.47" data-duration="0.14" data-track-index="9" data-volume="0.28" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+    </div>
+    <script>
+      const rootTimeline = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["root"] = rootTimeline;
+    </script>
+  </body>
+</html>

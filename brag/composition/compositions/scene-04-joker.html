@@ -1,0 +1,47 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; color: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: radial-gradient(ellipse at 50% 38%, #0f2e21 0%, #081a13 50%, #030a07 100%); }
+    #root::before { content: ""; position: absolute; inset: 170px 0 590px; background: radial-gradient(ellipse at 50% 52%, rgba(13,70,44,.85), rgba(8,26,19,.05) 69%); }
+    .content { position: absolute; inset: 180px 70px 620px; overflow: hidden; }
+    .brand { position: absolute; top: 10px; right: 4px; color: #c3d5cb; font-size: 28px; font-weight: 800; letter-spacing: .1em; }
+    .title { position: absolute; top: 70px; left: 0; width: 100%; color: #f8fafc; font-size: 68px; font-weight: 900; letter-spacing: -.04em; line-height: 1; text-align: center; }
+    .title span { color: #fbbf24; }
+    .table { position: absolute; top: 280px; left: 48px; width: 844px; height: 540px; border: 2px solid rgba(212,175,55,.35); border-radius: 46% 46% 38% 38%; background: radial-gradient(ellipse at 50% 45%, #0d462c 0%, #083320 65%, #052115 100%); box-shadow: inset 0 6px 30px rgba(0,0,0,.42), 0 22px 42px rgba(0,0,0,.4); }
+    .table-word { position: absolute; top: 12px; width: 100%; color: #cbd5d1; font-size: 28px; font-weight: 700; letter-spacing: .1em; text-align: center; }
+    .joker-card { position: absolute; top: 414px; width: 255px; height: 357px; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(15,23,42,.17); border-radius: 22px; background: linear-gradient(165deg,#fff,#f3f5f6); box-shadow: 0 18px 34px rgba(0,0,0,.42); }
+    .joker-bw { left: 154px; }
+    .joker-color { left: 435px; border-color: rgba(251,191,36,.85); box-shadow: 0 0 0 5px rgba(251,191,36,.12),0 22px 40px rgba(0,0,0,.48); }
+    .joker-card img { width: 72%; height: 72%; object-fit: contain; }
+    .counter-arrow { position: absolute; top: 582px; left: 397px; z-index: 4; color: #17251f; font-size: 44px; font-weight: 900; }
+    .copy { position: absolute; top: 875px; left: 24px; width: 892px; color: #f8fafc; font-size: 58px; font-weight: 850; letter-spacing: -.04em; line-height: 1.04; text-align: center; }
+    .copy span { color: #fbbf24; }
+    .small-note { position: absolute; top: 1057px; left: 0; width: 100%; color: #c7d8cf; font-size: 30px; font-weight: 700; letter-spacing: .08em; text-align: center; }
+  </style>
+  <div data-hf-id="hf-gzqa" id="root" data-composition-id="scene-04-joker" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-mcm7" class="content">
+      <div data-hf-id="hf-e7ah" id="joker-brand" class="clip" data-start="0" data-duration="4.2"><div data-hf-id="hf-8ixw" id="joker-brand-copy" class="brand">CLIMB / CARD GAME</div></div>
+      <div data-hf-id="hf-y91l" id="joker-title" class="clip" data-start="0.05" data-duration="4"><div data-hf-id="hf-jxp9" id="joker-title-copy" class="title">JOKER <span data-hf-id="hf-q8xf">COUNTER.</span></div></div>
+      <div data-hf-id="hf-kslb" id="joker-table" class="clip table" data-start="0.24" data-duration="3.75"><div data-hf-id="hf-pev8" class="table-word">A PLAY CAN BE ANSWERED</div></div>
+      <div data-hf-id="hf-684p" id="joker-bw" class="clip joker-card joker-bw" data-start="0.5" data-duration="3.45"><img data-hf-id="hf-1e7s" src="assets/jokers/black%20and%20white%20male%20joker.webp" alt="" /></div>
+      <div data-hf-id="hf-3mpd" id="joker-color" class="clip joker-card joker-color" data-start="0.5" data-duration="3.45"><img data-hf-id="hf-jmdn" src="assets/jokers/Colored%20male%20joker.webp" alt="" /></div>
+      <div data-hf-id="hf-vvmm" id="joker-arrow" class="clip" data-start="0.9" data-duration="3.05"><div data-hf-id="hf-zii3" id="joker-arrow-copy" class="counter-arrow">›</div></div>
+      <div data-hf-id="hf-fq44" id="joker-copy" class="clip" data-start="1.18" data-duration="2.72"><div data-hf-id="hf-l065" id="joker-copy-main" class="copy">ONLY A HIGHER JOKER<br data-hf-id="hf-x5px" />CAN <span data-hf-id="hf-1268">BEAT IT.</span></div></div>
+      <div data-hf-id="hf-vosl" id="joker-note" class="clip" data-start="1.42" data-duration="2.48"><div data-hf-id="hf-fwjq" id="joker-note-copy" class="small-note">SAME SIZE. HIGHER RANK.</div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#joker-brand-copy", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.03);
+    tl.fromTo("#joker-title-copy", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.34, ease: "power3.out" }, 0.08);
+    tl.fromTo("#joker-table", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.38, ease: "power2.out" }, 0.24);
+    tl.fromTo("#joker-bw", { opacity: 0, x: -60, y: 38, rotation: -10, scale: 0.92 }, { opacity: 1, x: 0, y: 0, rotation: -7, scale: 1, duration: 0.42, ease: "power3.out" }, 0.54);
+    tl.fromTo("#joker-color", { opacity: 0, x: 65, y: 45, rotation: 10, scale: 0.9 }, { opacity: 1, x: 0, y: 0, rotation: 7, scale: 1, duration: 0.42, ease: "power3.out" }, 1.05);
+    tl.fromTo("#joker-arrow-copy", { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.24, ease: "power2.out" }, 1.65);
+    const jokerBassAt13_11 = 0.553;
+    tl.to("#joker-color", { y: -28, scale: 1.04 + jokerBassAt13_11 * 0.03, rotation: 0, duration: 0.32, ease: "back.out(1.2)" }, 2.51);
+    tl.fromTo("#joker-copy-main", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 1.18);
+    tl.fromTo("#joker-note-copy", { opacity: 0 }, { opacity: 1, duration: 0.28 }, 1.45);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["scene-04-joker"] = tl;
+  </script>
+</template>

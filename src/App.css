@@ -142,6 +142,26 @@
   padding: 0;
 }
 
+@media screen and (max-width: 768px) {
+  .easy-mode-indicator {
+    top: max(env(safe-area-inset-top), 0.4rem);
+    left: max(env(safe-area-inset-left), 0.5rem);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.62rem;
+  }
+
+  .top-controls-bar {
+    top: max(env(safe-area-inset-top), 0.4rem);
+    right: max(env(safe-area-inset-right), 0.5rem);
+    gap: 0.35rem;
+  }
+
+  .top-control-btn {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+}
+
 .top-control-btn:hover {
   background: rgba(30, 41, 59, 0.95);
   border-color: rgba(251, 191, 36, 0.5);
@@ -478,7 +498,8 @@
    Mobile Portrait Adaptations (Row of Opponents across Top)
    ========================================================================== */
 
-@media screen and (max-width: 768px) and (orientation: portrait) {
+@media screen and (max-width: 768px) and (orientation: portrait),
+       screen and (max-width: 600px) {
   .game-screen {
     gap: clamp(0.2rem, 0.6vh, 0.45rem);
     grid-template-columns: 1fr 1fr 1fr;
@@ -488,13 +509,16 @@
       "seat-table seat-table seat-table"
       "seat-controls seat-controls seat-controls"
       "seat-hand seat-hand seat-hand";
-    padding: max(env(safe-area-inset-top), 0.35rem) 0.4rem 0.2rem;
+    padding-top: calc(max(env(safe-area-inset-top), 0.4rem) + 2.75rem);
+    padding-left: max(env(safe-area-inset-left), 0.35rem);
+    padding-right: max(env(safe-area-inset-right), 0.35rem);
+    padding-bottom: 0.2rem;
   }
 
   .seat-top,
   .seat-left,
   .seat-right {
-    padding: 0 0.2rem;
+    padding: 0 0.15rem;
   }
 }
 
@@ -972,8 +996,13 @@
 .hand-card-wrapper {
   position: relative;
   flex-shrink: 1;
+  pointer-events: none;
   transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: transform;
+}
+
+.hand-card-wrapper .card {
+  pointer-events: auto;
 }
 
 /* Keyboard focus also brings a card above the selected stack. */

@@ -1,0 +1,48 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; color: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: radial-gradient(ellipse at 50% 38%, #0f2e21 0%, #081a13 50%, #030a07 100%); }
+    #root::before { content: ""; position: absolute; inset: 170px 0 590px; background: radial-gradient(ellipse at 50% 52%, rgba(13,70,44,.88), rgba(8,26,19,.08) 66%); }
+    .content { position: absolute; inset: 180px 70px 620px; overflow: hidden; }
+    .brand { position: absolute; top: 20px; left: 0; display: flex; align-items: center; gap: 14px; color: #f8fafc; font-size: 28px; font-weight: 800; letter-spacing: .1em; }
+    .brand-mark { display: flex; width: 54px; height: 54px; align-items: center; justify-content: center; border: 2px solid rgba(251,191,36,.8); border-radius: 16px; color: #fbbf24; font-size: 33px; }
+    .brand-sub { color: #b8c9bf; font-size: 28px; font-weight: 600; letter-spacing: .1em; }
+    .fan { position: absolute; top: 215px; left: 35px; width: 870px; height: 390px; }
+    .card { position: absolute; top: 15px; width: 228px; height: 320px; border: 2px solid rgba(15,23,42,.16); border-radius: 24px; background: linear-gradient(165deg,#fff 0%,#f8fafc 100%); box-shadow: 0 18px 35px rgba(0,0,0,.36); color: #0f172a; }
+    .card-left { left: 130px; }
+    .card-center { left: 321px; top: 0; border-color: rgba(251,191,36,.85); box-shadow: 0 0 0 6px rgba(251,191,36,.12), 0 24px 50px rgba(0,0,0,.48); }
+    .card-right { left: 512px; }
+    .corner { position: absolute; top: 18px; left: 18px; display: flex; flex-direction: column; gap: 1px; font-size: 32px; font-weight: 800; line-height: .92; }
+    .club { color: #17251f; }
+    .diamond { color: #dc2626; }
+    .spade { color: #17251f; }
+    .pip { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 118px; }
+    .eyebrow { position: absolute; top: 690px; left: 0; width: 100%; color: #fbbf24; font-size: 30px; font-weight: 800; letter-spacing: .13em; text-align: center; }
+    .headline { position: absolute; top: 745px; left: 0; width: 100%; color: #f8fafc; font-size: 92px; font-weight: 900; letter-spacing: -.045em; line-height: .98; text-align: center; }
+    .headline span { color: #fbbf24; }
+    .rule-line { position: absolute; top: 965px; left: 275px; width: 390px; height: 3px; background: linear-gradient(90deg,transparent,rgba(251,191,36,.8),transparent); }
+  </style>
+  <div data-hf-id="hf-9bgh" id="root" data-composition-id="scene-01-hook" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-mcm7" class="content">
+      <div data-hf-id="hf-ogv1" id="hook-brand" class="clip" data-start="0" data-duration="2.8"><div data-hf-id="hf-zch3" id="hook-brand-inner" class="brand"><span data-hf-id="hf-e2zb" class="brand-mark">♣</span><span data-hf-id="hf-di9q">CLIMB</span><span data-hf-id="hf-u9lv" class="brand-sub">CARD GAME</span></div></div>
+      <div data-hf-id="hf-ne65" id="hook-fan" class="clip fan" data-start="0" data-duration="2.67">
+        <div data-hf-id="hf-fkvq" id="hook-card-left" class="card card-left"><span data-hf-id="hf-q7hb" class="corner diamond">10<span data-hf-id="hf-b83p">♦</span></span><span data-hf-id="hf-tafe" class="pip diamond">♦</span></div>
+        <div data-hf-id="hf-jz4e" id="hook-card-center" class="card card-center"><span data-hf-id="hf-vuub" class="corner club">3<span data-hf-id="hf-d7mu">♣</span></span><span data-hf-id="hf-cjmh" class="pip club">♣</span></div>
+        <div data-hf-id="hf-7xy8" id="hook-card-right" class="card card-right"><span data-hf-id="hf-rtem" class="corner spade">K<span data-hf-id="hf-dlxv">♠</span></span><span data-hf-id="hf-a8dp" class="pip spade">♠</span></div>
+      </div>
+      <div data-hf-id="hf-ndtu" id="hook-headline" class="clip" data-start="0.38" data-duration="2.3"><div data-hf-id="hf-r0ta" id="hook-question" class="headline">JUST ONE<br data-hf-id="hf-x5px" /><span data-hf-id="hf-16n6">QUICK HAND?</span></div></div>
+      <div data-hf-id="hf-4jaw" id="hook-eyebrow" class="clip" data-start="0.54" data-duration="2.15"><div data-hf-id="hf-q4eo" id="hook-kicker" class="eyebrow">A TABLE FOR FOUR</div></div>
+      <div data-hf-id="hf-48pl" class="rule-line"></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#hook-brand-inner", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 0.05);
+    tl.fromTo("#hook-card-left", { opacity: 0, y: 65, rotation: -17, scale: 0.88 }, { opacity: 1, y: 0, rotation: -13, scale: 1, duration: 0.48, ease: "power3.out" }, 0.12);
+    tl.fromTo("#hook-card-center", { y: 80, rotation: 0, scale: 0.82 }, { y: 0, rotation: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 0.2);
+    tl.fromTo("#hook-card-right", { opacity: 0, y: 65, rotation: 17, scale: 0.88 }, { opacity: 1, y: 0, rotation: 12, scale: 1, duration: 0.48, ease: "power3.out" }, 0.28);
+    tl.fromTo("#hook-question", { opacity: 0, y: 38 }, { opacity: 1, y: 0, duration: 0.38, ease: "power3.out" }, 0.46);
+    tl.fromTo("#hook-kicker", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.65);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["scene-01-hook"] = tl;
+  </script>
+</template>
